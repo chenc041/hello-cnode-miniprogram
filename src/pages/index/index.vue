@@ -1,113 +1,106 @@
 <template>
-  <div class="container" @click="clickHandle('test click', $event)">
-    <div class="userinfo" @click="bindViewTap">
-      <img
-        class="userinfo-avatar"
-        v-if="userInfo.avatarUrl"
-        :src="userInfo.avatarUrl"
-        background-size="cover"
-      >
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
+  <div class="container">
+    <div class="topic-list">
+      <div class="topic-list-item" v-for="item of topics" :key="item.id" @click="navigateTo('/pages/detail/main', 'id', item.id)">
+        <div class="topic-item-left">
+          <img :src="item.author.avatar_url" :alt="item.author.loginname">
+        </div>
+        <div class="topic-item-right">
+          <div class="topic-list-item-top">
+            <div class="topic-author">{{ item.author.loginname }}</div>
+            <div class="topic-time" :data-time="item.create_at">{{ item.create_at }}</div>
+          </div>
+          <div class="topic-list-item-bottom">
+            <div class="toppic-title">{{ item.title }}</div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="usermotto">
-      <div class="user-motto">
-        <card :text="motto"></card>
-      </div>
-    </div>
-
-    <form class="form-container">
-      <input type="text" class="form-control" v-model="motto" placeholder="v-model">
-      <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy">
-    </form>
-    <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
   </div>
 </template>
 
 <script>
-import card from '@/components/card';
-import { ajax } from '@/utils';
+import { formatData } from '../../utils';
 
 export default {
   data() {
     return {
-      motto: 'Hello World',
-      userInfo: {},
+      topics: [],
     };
   },
-
-  components: {
-    card,
-  },
-
   methods: {
-    bindViewTap() {
-      const url = '../logs/main';
-      wx.navigateTo({ url });
-    },
-    getUserInfo() {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo;
-            },
-          });
-        },
-      });
-      ajax({
+    getTopics() {
+      this.$ajax({
         url: 'https://cnodejs.org/api/v1/topics?limit=10',
-      }).then(res => console.log(res, '>>>>>>>>>')) // eslint-disable-line
+      }).then(res => (this.topics = formatData(res.data))); // eslint-disable-line
     },
-    clickHandle(msg, ev) {
-      console.log('clickHandle:', msg, ev); // eslint-disable-line
+    navigateTo(url, key, value) {
+      wx.navigateTo({
+        url: `${url}?${key}=${value}`,
+      });
     },
   },
-
   created() {
-    // 调用应用实例的方法获取全局数据
-    this.getUserInfo();
+    this.getTopics();
   },
 };
 </script>
 
 <style scoped>
-.userinfo {
+.topic-list-item {
   display: flex;
-  flex-direction: column;
+  width: 345px;
+  height: 80px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  justify-content: flex-start;
+  box-shadow: 0 0 8px 2px #dddddd;
+}
+
+.topic-item-left {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  overflow: hidden;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.topic-item-left img {
+  width: 100%;
+  height: 100%;
+}
+.topic-item-right {
+  width: 285px;
+}
+.toppic-title {
+  font-size: 15px;
+}
+
+.topic-list-item-top,
+.topic-list-item-bottom {
+  display: flex;
   align-items: center;
+  justify-content: space-between;
 }
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.toppic-title {
+  width: 100%;
+  margin-right: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
-
-.userinfo-nickname {
-  color: #aaa;
+.topic-author {
+  font-size: 16px;
+  padding-top: 10px;
+  padding-bottom: 6px;
+  padding-right: 10px;
 }
-
-.usermotto {
-  margin-top: 150px;
-}
-
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
-
-.counter {
-  display: inline-block;
-  margin: 10px auto;
-  padding: 5px 10px;
-  color: blue;
-  border: 1px solid blue;
+.topic-time {
+  color: #333333;
+  font-size: 12px;
+  padding-top: 10px;
+  padding-bottom: 6px;
+  padding-right: 10px;
 }
 </style>

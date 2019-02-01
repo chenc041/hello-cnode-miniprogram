@@ -15,11 +15,11 @@ export default {
 .container {
   height: 100%;
   display: flex;
-  flex-direction: column;
+  padding-top: 20px;
   align-items: center;
-  justify-content: space-between;
-  padding: 200rpx 0;
   box-sizing: border-box;
+  flex-direction: column;
+  justify-content: space-between;
 }
 /* this rule will be remove */
 * {

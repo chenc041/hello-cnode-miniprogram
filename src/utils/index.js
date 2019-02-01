@@ -4,18 +4,36 @@ function formatNumber(n) {
 }
 
 export function formatTime(date) {
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
+  const dateTime = new Date(date);
+  const year = dateTime.getFullYear();
+  const month = dateTime.getMonth() + 1;
+  const day = dateTime.getDate();
 
-  const hour = date.getHours();
-  const minute = date.getMinutes();
-  const second = date.getSeconds();
+  const hour = dateTime.getHours();
+  const minute = dateTime.getMinutes();
+  const second = dateTime.getSeconds();
 
-  const t1 = [year, month, day].map(formatNumber).join('/');
+  const t1 = [year, month, day].map(formatNumber).join('-');
   const t2 = [hour, minute, second].map(formatNumber).join(':');
-
   return `${t1} ${t2}`;
+}
+
+export function formatData(data) {
+  // eslint-disable-next-line
+  const result = data.map((item) => {
+    return { ...item, create_at: formatTime(item.create_at), content: item.content.replace(/<img/gi, '<img style="max-width:100%;height:auto"') };
+  });
+  return result;
+}
+
+export function formatRichText(data) {
+  return {
+    ...data,
+    create_at: formatTime(data.create_at),
+    content: data.content.replace(/<img/gi, '<img style="max-width:100%;height:auto"'),
+    last_reply_at: formatTime(data.last_reply_at),
+    replies: formatData(data.replies),
+  };
 }
 
 export function ajax({
@@ -27,7 +45,7 @@ export function ajax({
 }) {
   return new Promise((resolve, reject) => {
     wx.request({
-      url, // 仅为示例，并非真实的接口地址
+      url,
       method,
       header,
       success(res) {
@@ -41,6 +59,9 @@ export function ajax({
 }
 
 export default {
+  formatRichText,
   formatNumber,
   formatTime,
+  formatData,
+  ajax,
 };

@@ -1,6 +1,6 @@
 # hello-miniprogram
 
-> mini program
+> a mini program base mpvue
 
 ## Build Setup
 
