@@ -48,7 +48,7 @@
 
 <script>
 import badge from '@/components/badge';
-import { formatData } from '../../utils';
+import { formatData, scanCode } from '../../utils';
 
 export default {
   components: {
@@ -114,10 +114,19 @@ export default {
         this.isRotate = true;
       }
     },
+    scanLogin() {
+      scanCode().then((res) => {
+        console.log(res);
+      });
+    },
     filterTab(event) {
       const { dataset: { tab } } = event.target;
-      this.tab = tab;
-      this.getTopics();
+      if (tab !== 'scan') {
+        this.tab = tab;
+        this.getTopics();
+      } else {
+        this.scanLogin();
+      }
     },
   },
   mounted() {
