@@ -14,7 +14,7 @@ export default {
       bagdeMap: {
         ask: '问答',
         share: '分享',
-        dev: '客户端测试',
+        dev: '开发',
         job: '招聘',
         good: '精华',
       },
@@ -31,6 +31,9 @@ export default {
 <style scoped>
 .cnode-badge {
   color: #333;
+  height: 20px;
+  width: 20px;
+  line-height: 20px;
   font-size: 10px;
   padding: 1px 5px;
   border-radius: 4px;

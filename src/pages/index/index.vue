@@ -3,7 +3,7 @@
     <scroll-view
       :scroll-y="true"
       :lower-threshold="20"
-      :style="{'height': '1010px'}"
+      :style="{'height': '1170px'}"
       @scrolltolower="scrolltolower"
       @scroll="scroll"
     >
@@ -134,7 +134,7 @@ export default {
 .topic-list-item {
   display: flex;
   width: 345px;
-  height: 90px;
+  height: 96px;
   border-radius: 8px;
   margin: 0 auto 18px;
   justify-content: flex-start;
@@ -143,6 +143,8 @@ export default {
 
 .topic-badge {
   display: flex;
+  margin-top: 6px;
+  align-items: center;
   justify-content: flex-end;
 }
 
@@ -150,7 +152,7 @@ export default {
   color: #ccc;
   font-size: 12px;
   text-align: right;
-  margin-top: 10px;
+  margin-left: 10px;
   margin-right: 10px;
 }
 
