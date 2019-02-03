@@ -42,14 +42,32 @@ export function ajax({
   header = {
     'content-type': 'application/json', // 默认值
   },
+  data,
+  ...params
 }) {
   return new Promise((resolve, reject) => {
     wx.request({
       url,
+      data,
       method,
       header,
+      ...params,
       success(res) {
         resolve(res.data);
+      },
+      fail(err) {
+        reject(err);
+      },
+    });
+  });
+}
+
+export function scanCode(...params) {
+  return new Promise((resolve, reject) => {
+    wx.scanCode({
+      ...params,
+      success(res) {
+        resolve(res);
       },
       fail(err) {
         reject(err);

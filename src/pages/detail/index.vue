@@ -1,38 +1,40 @@
 <template>
   <div class="topic-content">
-    <div class="topic-detail-title">
-      {{ detail.title }}
-    </div>
-    <div class="topic-detail-content">
-      <rich-text :nodes="detail.content" bindtap="tap" />
-    </div>
-    <div class="topic-detail-replies" v-if="detail.replies.length > 0">
-      <div class="tips">
-        跟帖内容：
+    <div class="toppic-content-wrap" v-show="isLoading">
+      <div class="topic-detail-title">
+        {{ detail.title }}
       </div>
-      <div class="open-close">
-        展开
+      <div class="topic-detail-content">
+        <rich-text :nodes="detail.content" bindtap="tap" />
       </div>
-    </div>
-    <div class="none" v-else>
-      暂无跟帖～
-    </div>
-    <div class="topic-detail-replay">
-      <div class="topic-detail-replay-item" v-for="item of detail.replies" :key="item.id">
-        <div class="topic-detail-replay-item-left">
-          <img :src="item.author.avatar_url" :alt="item.author.loginname">
+      <div class="topic-detail-replies" v-if="detail.replies.length > 0">
+        <div class="tips">
+          跟帖内容：
         </div>
-        <div class="topic-detail-replay-item-right">
-          <div class="topic-detail-replay-item-top">
-            <div class="topic-replay-name">
-              {{ item.author.loginname }}
-            </div>
-            <div class="topic-replay-created">
-              {{ item.created_at }}
-            </div>
+        <div class="open-close">
+          展开
+        </div>
+      </div>
+      <div class="none" v-else>
+        暂无跟帖～
+      </div>
+      <div class="topic-detail-replay">
+        <div class="topic-detail-replay-item" v-for="item of detail.replies" :key="item.id">
+          <div class="topic-detail-replay-item-left">
+            <img :src="item.author.avatar_url" :alt="item.author.loginname">
           </div>
-          <div class="topic-detail-replay-item-content">
-            <rich-text :nodes="item.content" bindtap="tap" />
+          <div class="topic-detail-replay-item-right">
+            <div class="topic-detail-replay-item-top">
+              <div class="topic-replay-name">
+                {{ item.author.loginname }}
+              </div>
+              <div class="topic-replay-created">
+                {{ item.created_at }}
+              </div>
+            </div>
+            <div class="topic-detail-replay-item-content">
+              <rich-text :nodes="item.content" bindtap="tap" />
+            </div>
           </div>
         </div>
       </div>
@@ -56,13 +58,20 @@ export default {
         reply_count: 0,
         replies: [],
       },
+      isLoading: true,
     };
   },
   methods: {
     getTopicDetail(id) {
+      wx.showLoading({
+        title: '加载中',
+      });
       this.$ajax({
         url: `https://cnodejs.org/api/v1/topic/${id}`,
-      }).then(res => this.detail = formatRichText(res.data)) // eslint-disable-line
+      }).then((res) => {
+        wx.hideLoading();
+        this.detail = formatRichText(res.data);
+      });
     },
   },
   mounted() {

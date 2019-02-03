@@ -1,12 +1,22 @@
 <template>
   <div class="account">
-    个人中心
+    <button type="default" text='扫码登录' @click="scanLogin()" />
   </div>
 </template>
 
 <script>
-export default {
+import button from '@/components/button';
+import { scanCode } from '../../utils';
 
+export default {
+  components: {
+    button,
+  },
+  methods: {
+    scanLogin() {
+      scanCode().then(res => console.log(res)); // eslint-disable-line
+    },
+  },
 };
 </script>
 

@@ -2,6 +2,15 @@
 
 > a mini program base mpvue
 
+### 功能清单
+- [ ] 查看
+- [ ] 分类
+- [ ] 发帖
+- [ ] 回帖
+- [ ] 个人
+- [ ] 删除
+- [ ] 点赞
+
 ## Build Setup
 
 ``` bash

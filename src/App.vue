@@ -1,6 +1,9 @@
 <script>
 export default {
   created() {
+    wx.showShareMenu({
+      withShareTicket: true,
+    });
     // 调用API从本地缓存中获取数据
     const logs = wx.getStorageSync('logs') || [];
     logs.unshift(Date.now());
@@ -15,7 +18,6 @@ export default {
 .container {
   height: 100%;
   display: flex;
-  padding-top: 20px;
   align-items: center;
   box-sizing: border-box;
   flex-direction: column;
