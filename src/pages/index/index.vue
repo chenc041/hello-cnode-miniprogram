@@ -116,13 +116,22 @@ export default {
     },
     scanLogin() {
       scanCode().then((res) => {
-        console.log(res);
+        if (res.errMsg === 'scanCode:ok') {
+          wx.setStorageSync('token', res.result);
+        } else {
+          wx.showLoading({
+            title: 'token 获取失败',
+            icon: 'success',
+            duration: 2000,
+          });
+        }
       });
     },
     filterTab(event) {
       const { dataset: { tab } } = event.target;
       if (tab !== 'scan') {
         this.tab = tab;
+        this.topics = [];
         this.getTopics();
       } else {
         this.scanLogin();
@@ -237,6 +246,7 @@ export default {
   width: 40px;
   right: 30px;
   bottom: 80px;
+  padding: 5px 0;
   position: fixed;
   font-size: 12px;
   overflow: hidden;
@@ -253,8 +263,8 @@ export default {
   transition: all 0.3s ease-in-out;
 }
 .menu-list li {
-  height: 25px;
-  line-height: 25px;
+  height: 30px;
+  line-height: 30px;
   transition: all 0.3s ease-in-out;
 }
 .cnode-menu-bar-ani {

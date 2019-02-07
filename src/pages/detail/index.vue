@@ -1,6 +1,6 @@
 <template>
   <div class="topic-content">
-    <div class="toppic-content-wrap" v-show="isLoading">
+    <div class="toppic-content-wrap" v-show="!isLoading">
       <div class="topic-detail-title">
         {{ detail.title }}
       </div>
@@ -70,6 +70,7 @@ export default {
         url: `https://cnodejs.org/api/v1/topic/${id}`,
       }).then((res) => {
         wx.hideLoading();
+        this.isLoading = false;
         this.detail = formatRichText(res.data);
       });
     },
