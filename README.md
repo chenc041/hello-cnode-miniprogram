@@ -14,11 +14,11 @@
 
 - 详情
 
-![Alt text](/snapshot/IMG_2202.png)
+![Alt text](/snapshot/IMG_2202.PNG)
 
 - 发帖
 
-![Alt text](/snapshot/IMG_2203.png)
+![Alt text](/snapshot/IMG_2203.PNG)
 
 ### 功能清单
 
