@@ -1,13 +1,15 @@
-# hello-miniprogram
+# hello-cnode
 
-> a mini program base mpvue
+> a cnode miniprogram base on mpvue
+> 讲道理，可能是
 
 ### 功能清单
-- [ ] 查看
-- [ ] 分类
-- [ ] 发帖
+
+- [x] 查看
+- [x] 分类
+- [x] 发帖
+- [x] 登录
 - [ ] 回帖
-- [ ] 个人
 - [ ] 删除
 - [ ] 点赞
 

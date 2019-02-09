@@ -19,6 +19,7 @@
 <script>
 
 import badge from '@/components/badge';
+import { scanCode } from '../../utils';
 
 export default {
   components: {
@@ -28,6 +29,7 @@ export default {
     return {
       title: '',
       content: '',
+      accesstoken: '',
       tab: '选择发帖分类',
       picker: ['问答', '分享', '招聘', '精华', '客户端测试'],
       bagdeMap: {
@@ -60,13 +62,63 @@ export default {
         method: 'POST',
         url: 'https://cnodejs.org/api/v1/topics',
         data: {
-          accesstoken: '',
+          accesstoken: self.accesstoken,
           title: self.title,
-          tab: self.bagdeMap[self.tab],
+          tab: 'dev',
           content: self.content,
         },
-      }).then(res => console.log(res)); // eslint-disable-line
+      }).then((res) => {
+        const { success } = res;
+        if (success) {
+          wx.showToast({
+            title: '帖子发布成功！',
+            icon: 'success',
+            duration: 2000,
+          });
+          setTimeout(() => {
+            wx.navigateTo({
+              url: '/pages/index/main',
+            });
+          }, 2100);
+        } else {
+          wx.showToast({
+            title: res.error_msg,
+            duration: 2000,
+          });
+        }
+      });
     },
+  },
+  mounted() {
+    const accesstoken = wx.getStorageSync('token');
+    if (accesstoken) {
+      this.accesstoken = accesstoken;
+    } else {
+      wx.showToast({
+        title: '请登录发帖',
+        icon: 'none',
+        duration: 1200,
+      });
+      setTimeout(() => {
+        scanCode().then((res) => {
+          if (res.errMsg === 'scanCode:ok') {
+            this.isRotate = false;
+            wx.showToast({
+              title: 'token 获取成功',
+              icon: 'success',
+              duration: 600,
+            });
+            wx.setStorageSync('token', res.result);
+          } else {
+            wx.showToast({
+              title: 'token 获取失败',
+              icon: 'none',
+              duration: 600,
+            });
+          }
+        });
+      }, 2000);
+    }
   },
 };
 </script>
@@ -90,7 +142,7 @@ export default {
   line-height: 34px;
 }
 .topic-content {
-  padding: 10px;
+  padding: 5px;
   margin: 15px auto;
   border-radius: 8px;
   border: 1px solid #eeeeee;

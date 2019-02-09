@@ -4,7 +4,10 @@
     "pages/logs/main",
     "pages/detail/main",
     "pages/publish/main",
-    "pages/account/main"
+    "pages/good/main",
+    "pages/share/main",
+    "pages/ask/main",
+    "pages/job/main"
   ],
   "tabBar": {
     "list": [
@@ -13,12 +16,20 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/publish/main",
-        "text": "发帖"
+        "pagePath": "pages/good/main",
+        "text": "精华"
       },
       {
-        "pagePath": "pages/account/main",
-        "text": "我"
+        "pagePath": "pages/share/main",
+        "text": "分享"
+      },
+      {
+        "pagePath": "pages/ask/main",
+        "text": "问答"
+      },
+      {
+        "pagePath": "pages/job/main",
+        "text": "招聘"
       }
     ]
   },

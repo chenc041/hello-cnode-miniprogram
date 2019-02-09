@@ -11,9 +11,6 @@
         <div class="tips">
           跟帖内容：
         </div>
-        <div class="open-close">
-          展开
-        </div>
       </div>
       <div class="none" v-else>
         暂无跟帖～

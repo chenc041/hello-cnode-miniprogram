@@ -2,7 +2,7 @@
   <div class="container">
     <scroll-view
       :scroll-y="true"
-      :lower-threshold="50"
+      :lower-threshold="20"
       :style="{'height': '1170px'}"
       @scrolltolower="scrolltolower"
       @scroll="scroll"
@@ -57,6 +57,7 @@ export default {
   },
   data() {
     return {
+      tab: 'job',
       topics: [],
       pageSize: 10,
       currentPage: 1,
@@ -68,13 +69,14 @@ export default {
     };
   },
   methods: {
-    getTopics(currentPage) {
+    getTopics(tab, currentPage) {
       wx.showLoading({
         title: '加载中',
       });
       this.$ajax({
         url: 'https://cnodejs.org/api/v1/topics',
         data: {
+          tab: this.tab,
           limit: this.pageSize,
           page: currentPage || this.currentPage,
         },
@@ -91,7 +93,7 @@ export default {
     scrolltolower() {
       const timer = setTimeout(() => {
         this.currentPage += 1;
-        this.getTopics(this.currentPage);
+        this.getTopics(this.tab, this.currentPage);
         clearTimeout(timer);
       }, 200);
     },
