@@ -2,11 +2,29 @@
   "pages": [
     "pages/index/main",
     "pages/logs/main",
-    "pages/counter/main"
+    "pages/detail/main",
+    "pages/publish/main",
+    "pages/account/main"
   ],
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/main",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/publish/main",
+        "text": "发帖"
+      },
+      {
+        "pagePath": "pages/account/main",
+        "text": "我"
+      }
+    ]
+  },
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#eeeeee",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
   }
