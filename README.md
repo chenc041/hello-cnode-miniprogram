@@ -1,7 +1,24 @@
 # hello-cnode
 
 > a cnode miniprogram base on mpvue
-> 讲道理，可能是
+
+
+---
+
+> 讲道理，可能是比较美丽的 cnode 小程序客户端之一了
+
+#### 运行实图
+- 首页
+
+![Alt text](/snapshot/IMG_2201.png)
+
+- 详情
+
+![Alt text](/snapshot/IMG_2202.png)
+
+- 发帖
+
+![Alt text](/snapshot/IMG_2203.png)
 
 ### 功能清单
 
