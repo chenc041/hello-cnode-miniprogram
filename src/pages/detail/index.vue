@@ -318,7 +318,7 @@ export default {
 }
 .topic-replay-agree {
   color: #777;
-  font-size: 12px;
+  font-size: 14px;
 }
 .reply-topic {
   width: 40px;
@@ -377,7 +377,7 @@ export default {
 .button {
   color: #ffffff;
   margin-left: 6px;
-  font-size: 14px;
+  font-size: 12px;
   padding: 5px 10px;
   border-radius: 5px;
   background: #0099FF;
