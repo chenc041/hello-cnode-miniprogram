@@ -5,20 +5,20 @@
 
 ---
 
-> 讲道理，可能是比较美丽的 cnode 小程序客户端之一了
+> 讲道理，可能是最丑的的 cnode 小程序客户端之一
 
 #### 运行实图
 - 首页
 
-![Alt text](/snapshot/IMG_2201.png)
+<img src='./snapshot/IMG_2201.png' width=320px>
 
 - 详情
 
-![Alt text](/snapshot/IMG_2202.PNG)
+<img src='./snapshot/IMG_2202.PNG' width=320px>
 
 - 发帖
 
-![Alt text](/snapshot/IMG_2203.PNG)
+<img src='./snapshot/IMG_2203.PNG' width=320px>
 
 ### 功能清单
 
