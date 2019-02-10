@@ -31,13 +31,12 @@ export default {
       content: '',
       accesstoken: '',
       tab: '选择发帖分类',
-      picker: ['问答', '分享', '招聘', '精华', '客户端测试'],
+      picker: ['问答', '分享', '招聘', '精华'],
       bagdeMap: {
         问答: 'ask',
         分享: 'share',
         招聘: 'job',
         精华: 'good',
-        客户端测试: 'dev',
       },
     };
   },

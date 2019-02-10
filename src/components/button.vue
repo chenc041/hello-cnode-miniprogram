@@ -39,7 +39,7 @@ export default {
 .cnode-button-primary {
   color: #ffffff;
   background: #0099FF;
-  border: 1px solid #ffffff;
+  border: 1px solid #0099FF;
 }
 .cnode-button-default {
   color: #333;

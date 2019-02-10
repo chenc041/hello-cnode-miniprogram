@@ -1,39 +1,31 @@
 <template>
   <div class="container">
-    <scroll-view
-      :scroll-y="true"
-      :lower-threshold="20"
-      :style="{'height': '1170px'}"
-      @scrolltolower="scrolltolower"
-      @scroll="scroll"
-    >
-      <div class="topic-list">
-        <div
-          class="topic-list-item"
-          v-for="item of topics"
-          :key="item.id"
-          @click="navigateTo('/pages/detail/main', 'id', item.id)"
-        >
-          <div class="topic-item-left">
-            <img :src="item.author.avatar_url" :alt="item.author.loginname">
+    <div class="topic-list">
+      <div
+        class="topic-list-item"
+        v-for="item of topics"
+        :key="item.id"
+        @click="navigateTo('/pages/detail/main', 'id', item.id)"
+      >
+        <div class="topic-item-left">
+          <img :src="item.author.avatar_url" :alt="item.author.loginname">
+        </div>
+        <div class="topic-item-right">
+          <div class="topic-list-item-top">
+            <div class="topic-author">{{ item.author.loginname }}</div>
+            <div class="topic-time" :data-time="item.create_at">{{ item.create_at }}</div>
           </div>
-          <div class="topic-item-right">
-            <div class="topic-list-item-top">
-              <div class="topic-author">{{ item.author.loginname }}</div>
-              <div class="topic-time" :data-time="item.create_at">{{ item.create_at }}</div>
-            </div>
-            <div class="topic-list-item-bottom">
-              <div class="topic-title">{{ item.title }}</div>
-              <div class="topic-badge">
-                <div class="top" v-if="item.top">置顶</div><span v-if="item.top" class="divider">|</span>
-                <badge :badge="item.tab"/> <span class="divider">|</span>
-                <div class="topic-hot">{{ item.reply_count }} / {{ item.visit_count }}</div>
-              </div>
+          <div class="topic-list-item-bottom">
+            <div class="topic-title">{{ item.title }}</div>
+            <div class="topic-badge">
+              <div class="top" v-if="item.top">置顶</div><span v-if="item.top" class="divider">|</span>
+              <badge :badge="item.tab"/> <span class="divider">|</span>
+              <div class="topic-hot">{{ item.reply_count }} / {{ item.visit_count }}</div>
             </div>
           </div>
         </div>
       </div>
-    </scroll-view>
+    </div>
     <div class="menu-list" :class="{ 'menu-list-ani': isRotate }">
       <ul @click="filterTab($event)" v-for="item of tabs" :key="item.key">
         <li :data-tab="item.key">{{ item.name }}</li>
@@ -81,13 +73,14 @@ export default {
           page: currentPage || this.currentPage,
         },
       }).then((res) => {
-        wx.hideLoading();
         if (this.topics.length > 0) {
           const tmp = [...this.topics, ...formatData(res.data)];
           this.topics = tmp;
         } else {
           this.topics = formatData(res.data);
         }
+        wx.hideLoading();
+        wx.stopPullDownRefresh();
       });
     },
     scrolltolower() {
@@ -137,6 +130,12 @@ export default {
         this.scanLogin();
       }
     },
+  },
+  onReachBottom() {
+    this.scrolltolower();
+  },
+  onPullDownRefresh() {
+    this.getTopics();
   },
   mounted() {
     this.getTopics();
@@ -223,6 +222,7 @@ export default {
   font-size: 12px;
   padding-top: 10px;
   padding-bottom: 6px;
+  text-align: right;
   padding-right: 10px;
 }
 
