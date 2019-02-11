@@ -40,19 +40,6 @@
           </div>
         </div>
       </div>
-      <div class="reply-topic" @click="showReply()">
-        +
-      </div>
-      <div class="reply-form" v-show="isShowReply">
-        <div class="reply-mask"></div>
-        <div class="reply-content">
-          <textarea v-model="content" cols="30" rows="10"></textarea>
-          <div class="reply-content-bottom">
-            <div class="cancel button" @click="showReply()">取消</div>
-            <div class="confirm button" @click="replay(detail.id)">确定</div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -122,52 +109,6 @@ export default {
         } else {
           wx.showToast({
             title: '点赞失败',
-            icon: 'none',
-            duration: 1200,
-          });
-        }
-        this.getTopicDetail(this.$root.$mp.query.id, this.accesstoken);
-      });
-    },
-    showReply() {
-      this.isShowReply = !this.isShowReply;
-    },
-    replay(id) {
-      if (!this.accesstoken) {
-        wx.showToast({
-          title: '请先登录',
-          icon: 'none',
-          duration: 1200,
-        });
-        return;
-      }
-      if (!this.content) {
-        wx.showToast({
-          title: '请填写内容',
-          icon: 'none',
-          duration: 800,
-        });
-        return;
-      }
-      this.isShowReply = false;
-      this.$ajax({
-        method: 'POST',
-        url: `https://cnodejs.org/api/v1/topic/${id}/replies`,
-        data: {
-          content: this.content,
-          accesstoken: this.accesstoken,
-        },
-      }).then((res) => {
-        const { success } = res;
-        if (success) {
-          wx.showToast({
-            title: '回复成功',
-            icon: 'success',
-            duration: 1200,
-          });
-        } else {
-          wx.showToast({
-            title: '回复失败',
             icon: 'none',
             duration: 1200,
           });

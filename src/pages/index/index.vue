@@ -26,16 +26,11 @@
         </div>
       </div>
     </div>
-    <div class="menu-list" :class="{ 'menu-list-ani': isRotate }">
-      <ul @click="filterTab($event)" v-for="item of tabs" :key="item.key">
-        <li :data-tab="item.key">{{ item.name }}</li>
-      </ul>
-    </div>
     <div
+      v-show="isScan"
       class="cnode-menu-bar"
-      :class="{ 'cnode-menu-bar-ani': isRotate }"
-      @click="changeRotate()"
-    >+</div>
+      @click="scanLogin()"
+    >[ ]</div>
   </div>
 </template>
 
@@ -52,11 +47,7 @@ export default {
       topics: [],
       pageSize: 10,
       currentPage: 1,
-      isRotate: false,
-      tabs: [
-        { name: '发帖', key: 'publish' },
-        { name: '登录', key: 'scan' },
-      ],
+      isScan: true,
     };
   },
   methods: {
@@ -93,13 +84,6 @@ export default {
         url: `${url}?${key}=${value}`,
       });
     },
-    changeRotate() {
-      if (this.isRotate) {
-        this.isRotate = false;
-      } else {
-        this.isRotate = true;
-      }
-    },
     scanLogin() {
       scanCode().then((res) => {
         if (res.errMsg === 'scanCode:ok') {
@@ -118,16 +102,6 @@ export default {
         }
       });
     },
-    filterTab(event) {
-      const { dataset: { tab } } = event.target;
-      if (tab !== 'scan') {
-        wx.navigateTo({
-          url: '/pages/publish/main',
-        });
-      } else {
-        this.scanLogin();
-      }
-    },
   },
   onReachBottom() {
     this.scrolltolower();
@@ -136,6 +110,10 @@ export default {
     this.getTopics();
   },
   mounted() {
+    const accesstoken = wx.getStorageSync('token');
+    if (accesstoken) {
+      this.isScan = false;
+    }
     this.getTopics();
   },
 };
@@ -230,11 +208,12 @@ export default {
   right: 30px;
   bottom: 30px;
   color: #333;
-  font-size: 24px;
+  font-size: 16px;
   position: fixed;
-  line-height: 36px;
+  line-height: 40px;
   text-align: center;
   border-radius: 100%;
+  transform: rotate(90deg);
   background-color: #eeeeee;
   transition: all 0.3s ease-in-out;
 }
