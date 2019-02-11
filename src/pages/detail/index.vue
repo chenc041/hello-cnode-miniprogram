@@ -149,6 +149,7 @@ export default {
         });
         return;
       }
+      this.isShowReply = false;
       this.$ajax({
         method: 'POST',
         url: `https://cnodejs.org/api/v1/topic/${id}/replies`,
@@ -158,7 +159,6 @@ export default {
         },
       }).then((res) => {
         const { success } = res;
-        this.isShowReply = false;
         if (success) {
           wx.showToast({
             title: '回复成功',
