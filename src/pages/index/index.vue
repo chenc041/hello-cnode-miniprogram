@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <div class="topic-list">
+    <SkeletonIndex v-if="topics.length === 0" />
+    <div class="topic-list" v-if="topics.length > 0">
       <div
         class="topic-list-item"
         v-for="item of topics"
@@ -8,7 +9,7 @@
         @click="navigateTo('/pages/detail/main', 'id', item.id)"
       >
         <div class="topic-item-left">
-          <img :src="item.author.avatar_url" :alt="item.author.loginname">
+          <img :src="item.author.avatar_url" :alt="item.author.loginname" />
         </div>
         <div class="topic-item-right">
           <div class="topic-list-item-top">
@@ -18,29 +19,28 @@
           <div class="topic-list-item-bottom">
             <div class="topic-title">{{ item.title }}</div>
             <div class="topic-badge">
-              <div class="top" v-if="item.top">置顶</div><span v-if="item.top" class="divider">|</span>
-              <badge :badge="item.tab"/> <span class="divider">|</span>
+              <div class="top" v-if="item.top">置顶</div>
+              <span v-if="item.top" class="divider">|</span>
+              <badge :badge="item.tab" />
+              <span class="divider">|</span>
               <div class="topic-hot">{{ item.reply_count }} / {{ item.visit_count }}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div
-      v-show="isScan"
-      class="cnode-menu-bar"
-      @click="scanLogin()"
-    >[ ]</div>
   </div>
 </template>
 
 <script>
 import badge from '@/components/badge';
-import { formatData, scanCode } from '../../utils';
+import SkeletonIndex from '@/components/skeletonIndex';
+import { formatData } from '../../utils';
 
 export default {
   components: {
     badge,
+    SkeletonIndex,
   },
   data() {
     return {
@@ -52,9 +52,6 @@ export default {
   },
   methods: {
     getTopics(currentPage) {
-      wx.showLoading({
-        title: '加载中',
-      });
       this.$ajax({
         url: 'https://cnodejs.org/api/v1/topics',
         data: {
@@ -68,7 +65,6 @@ export default {
         } else {
           this.topics = formatData(res.data);
         }
-        wx.hideLoading();
         wx.stopPullDownRefresh();
       });
     },
@@ -84,30 +80,9 @@ export default {
         url: `${url}?${key}=${value}`,
       });
     },
-    scanLogin() {
-      scanCode().then((res) => {
-        if (res.errMsg === 'scanCode:ok') {
-          this.isRotate = false;
-          wx.setStorageSync('token', res.result);
-          wx.showToast({
-            title: 'token 获取成功',
-            icon: 'success',
-            duration: 2000,
-          });
-        } else {
-          wx.showToast({
-            title: 'token 获取失败',
-            duration: 2000,
-          });
-        }
-      });
-    },
   },
   onReachBottom() {
     this.scrolltolower();
-  },
-  onPullDownRefresh() {
-    this.getTopics();
   },
   mounted() {
     const accesstoken = wx.getStorageSync('token');
@@ -157,7 +132,7 @@ export default {
   margin-right: 10px;
   margin-left: 10px;
 }
-.topic-item-left>img {
+.topic-item-left > img {
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -265,5 +240,4 @@ export default {
   background: #ff4466;
   border: 0.5px solid #ff4466;
 }
-
 </style>

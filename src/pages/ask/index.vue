@@ -8,7 +8,7 @@
         @click="navigateTo('/pages/detail/main', 'id', item.id)"
       >
         <div class="topic-item-left">
-          <img :src="item.author.avatar_url" :alt="item.author.loginname">
+          <img :src="item.author.avatar_url" :alt="item.author.loginname" />
         </div>
         <div class="topic-item-right">
           <div class="topic-list-item-top">
@@ -18,19 +18,17 @@
           <div class="topic-list-item-bottom">
             <div class="topic-title">{{ item.title }}</div>
             <div class="topic-badge">
-              <div class="top" v-if="item.top">置顶</div><span v-if="item.top" class="divider">|</span>
-              <badge :badge="item.tab"/> <span class="divider">|</span>
+              <div class="top" v-if="item.top">置顶</div>
+              <span v-if="item.top" class="divider">|</span>
+              <badge :badge="item.tab" />
+              <span class="divider">|</span>
               <div class="topic-hot">{{ item.reply_count }} / {{ item.visit_count }}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div
-      v-if="isScan"
-      class="cnode-menu-bar"
-      @click="scanLogin()"
-    >[ ]</div>
+    <div v-if="isScan" class="cnode-menu-bar" @click="scanLogin()">[ ]</div>
   </div>
 </template>
 
@@ -158,7 +156,7 @@ export default {
   margin-right: 10px;
   margin-left: 10px;
 }
-.topic-item-left>img {
+.topic-item-left > img {
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -266,5 +264,4 @@ export default {
   background: #ff4466;
   border: 0.5px solid #ff4466;
 }
-
 </style>

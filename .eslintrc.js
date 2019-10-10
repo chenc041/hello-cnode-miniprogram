@@ -34,6 +34,7 @@ module.exports = {
     // allow optionalDependencies
     'import/no-extraneous-dependencies': 0,
     'import/no-duplicates': 0,
+    'arrow-parens':0,
     'import/no-named-as-default': 0,
     'import/no-named-as-default-member': 0,
     // allow debugger during development
