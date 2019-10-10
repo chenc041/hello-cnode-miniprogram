@@ -24,10 +24,7 @@
               <rich-text :nodes="item.content" bindtap="tap" />
             </div>
             <div class="topic-detail-replay-item-content topic-detail-replay-item-bottom">
-              <div class="topic-replay-agree">
-                {{ item.ups.length }} 赞
-                <span class="divider">|</span>
-              </div>
+              <div class="topic-replay-agree">{{ item.ups.length }} 赞</div>
             </div>
           </div>
         </div>
@@ -63,16 +60,12 @@ export default {
   },
   methods: {
     getTopicDetail(id, accesstoken) {
-      wx.showLoading({
-        title: '加载中',
-      });
       this.$ajax({
         url: `https://cnodejs.org/api/v1/topic/${id}`,
         data: {
           accesstoken,
         },
       }).then((res) => {
-        wx.hideLoading();
         this.isLoading = false;
         wx.stopPullDownRefresh();
         this.detail = formatRichText(res.data);
@@ -88,6 +81,9 @@ export default {
       this.accesstoken = accesstoken;
     }
     this.getTopicDetail(this.$root.$mp.query.id, accesstoken);
+  },
+  onUnload() {
+    this.detail.content = '';
   },
 };
 </script>
